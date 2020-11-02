@@ -48,7 +48,16 @@ class HistoriaClinica{
     public function getHistoriaClinicaId($identidad){
         $pdo = $this->pdo;
         $sql = "SELECT h.id_historia_clinica, h.temperatura, h.peso, h.frecuencia_cardiaca, h.fecha, h.hora, h.descripcion_historia__clinica, h.id_mascota, m.nombre_mascotas FROM historia_clinica h
-        INNER JOIN mascota m ON h.id_mascota = m.id_mascotas WHERE id_mascota=:identidad";
+        INNER JOIN mascota m ON h.id_mascota = m.id_mascotas WHERE id_historia_clinica=:identidad";
+        $prepared = $pdo->prepare($sql);
+        $resultQuery = $prepared->execute(['identidad' => $identidad]);
+        $result = $prepared->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getHistoriaClinicaxMascota($identidad){
+        $pdo = $this->pdo;
+        $sql = "SELECT h.id_historia_clinica, h.temperatura, h.peso, h.frecuencia_cardiaca, h.fecha, h.hora, h.descripcion_historia__clinica, h.id_mascota, m.nombre_mascotas FROM historia_clinica h
+        INNER JOIN mascota m ON h.id_mascota = m.id_mascotas WHERE id_mascotas=:identidad";
         $prepared = $pdo->prepare($sql);
         $resultQuery = $prepared->execute(['identidad' => $identidad]);
         $result = $prepared->fetchAll(\PDO::FETCH_ASSOC);
@@ -64,19 +73,19 @@ class HistoriaClinica{
         return $queryResult;
     }
 
-    public function actualizarHistoriasClinicas($id_historia_clinica,$temperatura, $peso,$frecuencia, $fecha,$hora,$descripcion,$id_mascota){
+    public function actualizarHistoriasClinicas($id_historia,$temperatura, $peso,$frecuencia, $fecha,$hora,$descripcion,$id_mascota){
         $pdo = $this->pdo;
         $sql = "UPDATE historia_clinica SET temperatura=:temperatura,peso=:peso,frecuencia_cardiaca=:frecuencia,fecha=:fecha,hora=:hora,descripcion_historia__clinica=:descripcion,id_mascota=:id_mascota WHERE id_historia_clinica = :id_historia_clinica";
         $query = $pdo->prepare($sql);
         $result = $query->execute([
-            'id_historia_clinica'=>$this->id_historia,
-            'temperatura' => $this->temperatura,
-            'peso' => $this->peso,
-            'frecuencia' => $this->frecuencia,
-            'fecha' => $this->fecha,
-            'hora' => $this->hora,
-            'descripcion' => $this->descripcion,
-            'id_mascota' => $this->id_mascota
+            'id_historia_clinica'=>$id_historia,
+            'temperatura' => $temperatura,
+            'peso' => $peso,
+            'frecuencia' => $frecuencia,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'descripcion' => $descripcion,
+            'id_mascota' => $id_mascota
             ]);
         return $result;
     }

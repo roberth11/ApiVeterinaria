@@ -8,25 +8,27 @@ class Mascota{
     private $color;
     private $edad;
     private $sexo;
+    private $raza;    
     private $id_cliente;
 
     public function __construct(){
         $this->pdo = new Conexion();
     }
     
-    public function agregarMascota($nombre_mascota, $tamaño,$color, $edad,$sexo,$id_cliente){
+    public function agregarMascota($nombre_mascota, $tamaño,$color, $edad,$sexo,$raza,$id_cliente){
         $this->nombre_mascota = $nombre_mascota;
         $this->tamaño = $tamaño;
         $this->color = $color;
         $this->edad = $edad;
         $this->sexo = $sexo;
+        $this->raza = $raza;
         $this->id_cliente = $id_cliente;
         $result = $this->guardarMascota();
         return $result;
     }    
     private function guardarMascota(){
         $pdo = $this->pdo;
-        $sql = "INSERT INTO mascota(nombre_mascotas, tamano, color, edad, sexo, id_cliente)  VALUES (:nombre_mascota,:tamano,:color,:edad,:sexo,:id_cliente)";
+        $sql = "INSERT INTO mascota(nombre_mascotas, tamano, color, edad, sexo,id_raza, id_cliente)  VALUES (:nombre_mascota,:tamano,:color,:edad,:sexo,:raza,:id_cliente)";
         $query = $pdo->prepare($sql);
         $result = $query->execute([
             'nombre_mascota' => $this->nombre_mascota,
@@ -34,6 +36,7 @@ class Mascota{
             'color' => $this->color,
             'edad' => $this->edad,
             'sexo' => $this->sexo,
+            'raza' => $this->raza,
             'id_cliente' => $this->id_cliente
             ]);
         return $result;

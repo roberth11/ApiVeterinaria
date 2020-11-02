@@ -24,20 +24,15 @@
             echo json_encode($result);
         break;
         case 'GET':
-            if (isset($_GET['idHistoria']) && !empty($_GET['idHistoria'])) {
-                $id=$_GET['idHistoria'];
-                $historiaclinica = new HistoriaClinica();
-                $result = $historiaclinica->getHistoriaClinicaId($id);
-                echo json_encode($result);
+            if (isset($_GET['buscar']) && !empty($_GET['buscar'])) {
+                if (isset($_GET['idHistoria']) && !empty($_GET['idHistoria'])) {
+                    $id=$_GET['idHistoria'];
+                    $historiaclinica = new HistoriaClinica();
+                    $result = $historiaclinica->getHistoriaClinicaxMascota($id);
+                    echo json_encode($result);
+                }
             }
-            else{
-                $historiaclinica = new HistoriaClinica();
-                $result = $historiaclinica->getHistoriasClinicas();
-                echo json_encode($result);
-            }    
-        break;
-        case 'PUT':
-            if (isset($_GET['idHistoria']) && !empty($_GET['idHistoria'])) {
+            elseif(isset($_GET['actualizar']) && !empty($_GET['actualizar'])){
                 $idhistoria=$_GET['idHistoria'];
                 $temperatura=$_GET['temperatura'];
                 $peso=$_GET['peso'];
@@ -48,8 +43,26 @@
                 $id_mascota=$_GET['idmascota'];
                 $historiaclinica = new HistoriaClinica();
                 $result = $historiaclinica->actualizarHistoriasClinicas($idhistoria,$temperatura,$peso,$frecuencia,$fecha,$hora,$descripcion,$id_mascota);
-                echo json_encode($result);
+                echo json_encode($idhistoria);
             }
+            else {
+                if (isset($_GET['idHistoria']) && !empty($_GET['idHistoria'])) {
+                    $id=$_GET['idHistoria'];
+                    $historiaclinica = new HistoriaClinica();
+                    $result = $historiaclinica->getHistoriaClinicaId($id);
+                    echo json_encode($result);
+                }
+                else{
+                    $historiaclinica = new HistoriaClinica();
+                    $result = $historiaclinica->getHistoriasClinicas();
+                    echo json_encode($result);
+                }    
+            }
+            
+        
+        break;
+        case 'PUT':
+        
         break;
         case 'DELETE':
             if (isset($_GET['idHistoria']) && !empty($_GET['idHistoria'])) {

@@ -13,10 +13,11 @@
                 $color=$_POST['color'];
                 $edad=$_POST['edad'];
                 $sexo=$_POST['sexo'];
+                $raza=$_POST['raza'];
                 $id_cliente=$_POST['selectCliente'];
 
                 $mascota = new Mascota();
-                $result = $mascota->agregarMascota($nombre_mascota, $tamano,$color, $edad,$sexo,$id_cliente);
+                $result = $mascota->agregarMascota($nombre_mascota, $tamano,$color, $edad,$sexo,$raza,$id_cliente);
                 echo json_encode($result);
         break;
         case 'GET':
