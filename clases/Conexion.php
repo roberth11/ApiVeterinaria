@@ -3,7 +3,7 @@ namespace clases_pdo;
 class Conexion extends \PDO{
     private $typeDB = 'mysql';
     private $host = 'localhost';
-    private $dbname = 'veterinaria';
+    private $dbname = 'bveterinaria';
     private $userDB = 'root';
     private $passwordDB = 'usbw';
     private static $persistent = false;
